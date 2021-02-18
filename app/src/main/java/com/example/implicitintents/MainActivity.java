@@ -1,6 +1,7 @@
 package com.example.implicitintents;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText mWebsiteEditText;
     private EditText mLocationEditText;
+    private EditText mShareTextEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         mWebsiteEditText = findViewById(R.id.website_edittext);
         mLocationEditText = findViewById(R.id.loaction_edittext);
+        mShareTextEditText = findViewById(R.id.share_edittext);
     }
 
     public void openWebsite(View view) {
@@ -58,5 +61,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareText(View view) {
+        String txt = mShareTextEditText.getText().toString();
+        String mimeType = "text/plain";
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle(R.string.share_text_with)
+                .setText(txt)
+                .startChooser();
     }
 }
